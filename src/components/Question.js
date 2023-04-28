@@ -10,6 +10,8 @@ class Question extends React.Component {
       guess: '',
     };
 
+    this.handleGuess = this.handleGuess.bind(this);
+
     // convert all answers into a single array, and randomize the array
     this.answers = randomizeArray([
       ...props.question.incorrect_answers,
@@ -35,11 +37,17 @@ class Question extends React.Component {
             <AnswerButton
               key={answer}
               answer={answer}
+              onClick={() => this.handleGuess(answer)}
             />
           ))}
         </div>
-
-        {/* Dynamically render correct/incorrect here! */}
+        {this.state.guessed ? (
+          <div>
+            {this.state.guess === this.props.question.correct_answer
+              ? 'Correct!'
+              : `Incorrect! The correct answer is ${this.props.question.correct_answer}`}
+          </div>
+        ) : null}
       </div>
     );
   }
